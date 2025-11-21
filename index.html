@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calculadora de Programa</title>
+
+  <style>
+    :root {
+      --rojo: #e53935;
+      --negro: #111111;
+      --gris-fondo: #f5f5f5;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--gris-fondo);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 24px 28px 30px;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+      border: 2px solid var(--negro);
+    }
+
+    .title {
+      font-size: 20px;
+      font-weight: 700;
+      text-align: center;
+      margin: 0 0 4px;
+      color: var(--negro);
+    }
+
+    .subtitle {
+      font-size: 12px;
+      text-align: center;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .row label {
+      flex: 1.2;
+      font-size: 14px;
+      color: var(--negro);
+    }
+
+    .row input[type="range"] {
+      flex: 2;
+      appearance: none;
+      height: 6px;
+      border-radius: 999px;
+      background: #c8e6c9;
+      outline: none;
+    }
+
+    .row input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--rojo);
+      border: 2px solid var(--negro);
+      cursor: pointer;
+    }
+
+    .row input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--rojo);
+      border: 2px solid var(--negro);
+      cursor: pointer;
+    }
+
+    .value-box {
+      width: 70px;
+      text-align: center;
+      border-radius: 8px;
+      padding: 6px 4px;
+      font-weight: 600;
+      border: 2px solid var(--negro);
+      background: #ffffff;
+      font-size: 14px;
+    }
+
+    .result-box {
+      margin-top: 22px;
+      border-radius: 14px;
+      padding: 18px 16px;
+      border: 3px solid var(--negro);
+      text-align: center;
+      background: #fff8f8;
+    }
+
+    .result-label {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #555;
+      margin-bottom: 6px;
+    }
+
+    .result-main {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--rojo);
+      margin-bottom: 4px;
+    }
+
+    .result-detail {
+      font-size: 13px;
+      color: #444;
+    }
+
+    .small-note {
+      font-size: 11px;
+      color: #888;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 12px;
+      }
+      .card {
+        padding: 18px 18px 22px;
+      }
+      .row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .value-box {
+        align-self: flex-end;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1 class="title">Calculadora de Programa</h1>
+    <p class="subtitle">
+      Ajustá los deslizadores y mirá abajo el resultado. Podés cambiar la fórmula dentro del código.
+    </p>
+
+    <!-- SLIDER 1: SESIONES -->
+    <div class="row">
+      <label for="sesiones">¿Cuántas sesiones al mes?</label>
+      <input id="sesiones" type="range" min="1" max="20" step="1" value="8" />
+      <div class="value-box" id="sesionesValor">8</div>
+    </div>
+
+    <!-- SLIDER 2: MESES -->
+    <div class="row">
+      <label for="meses">¿Cuántos meses dura el programa?</label>
+      <input id="meses" type="range" min="1" max="12" step="1" value="3" />
+      <div class="value-box" id="mesesValor">3</div>
+    </div>
+
+    <!-- SLIDER 3: PRECIO POR SESIÓN -->
+    <div class="row">
+      <label for="precio">Precio por sesión (USD)</label>
+      <input id="precio" type="range" min="20" max="500" step="10" value="100" />
+      <div class="value-box" id="precioValor">100</div>
+    </div>
+
+    <!-- SLIDER 4: NÚMERO DE ALUMNOS (OPCIONAL) -->
+    <div class="row">
+      <label for="alumnos">Cantidad de alumnos</label>
+      <input id="alumnos" type="range" min="1" max="20" step="1" value="1" />
+      <div class="value-box" id="alumnosValor">1</div>
+    </div>
+
+    <!-- RESULTADO -->
+    <div class="result-box">
+      <div class="result-label">Ingresos totales estimados</div>
+      <div class="result-main" id="resultado">$ 2.400</div>
+      <div class="result-detail" id="detalleTexto">
+        8 sesiones/mes × 3 meses × U$D 100 × 1 alumno
+      </div>
+    </div>
+
+    <p class="small-note">
+      Para cambiar la lógica, editá la parte marcada como "FÓRMULA" dentro del &lt;script&gt;.
+    </p>
+  </div>
+
+  <script>
+    // Referencias a los sliders
+    const sesiones = document.getElementById("sesiones");
+    const meses = document.getElementById("meses");
+    const precio = document.getElementById("precio");
+    const alumnos = document.getElementById("alumnos");
+
+    // Referencias a los números a la derecha
+    const sesionesValor = document.getElementById("sesionesValor");
+    const mesesValor = document.getElementById("mesesValor");
+    const precioValor = document.getElementById("precioValor");
+    const alumnosValor = document.getElementById("alumnosValor");
+
+    // Referencias al resultado
+    const resultado = document.getElementById("resultado");
+    const detalleTexto = document.getElementById("detalleTexto");
+
+    function actualizar() {
+      const s = Number(sesiones.value);
+      const m = Number(meses.value);
+      const p = Number(precio.value);
+      const a = Number(alumnos.value);
+
+      // Actualizar los numeritos de la derecha
+      sesionesValor.textContent = s;
+      mesesValor.textContent = m;
+      precioValor.textContent = p;
+      alumnosValor.textContent = a;
+
+      // 🔴🔴🔴 FÓRMULA QUE PODÉS PERSONALIZAR 🔴🔴🔴
+      //
+      // Ahora mismo la cuenta es:
+      // total = sesiones_por_mes × meses × precio_por_sesion × alumnos
+      //
+      // Si querés otra cosa (por ejemplo agregar un descuento,
+      // dividir por algo, sumar un costo fijo, etc.),
+      // cambiás esta línea:
+      const total = s * m * p * a;
+
+      // Formatear número con separador de miles
+      resultado.textContent = "$ " + total.toLocaleString("es-ES");
+
+      // Texto de detalle debajo
+      detalleTexto.textContent =
+        s +
+        " sesiones/mes × " +
+        m +
+        " meses × U$D " +
+        p +
+        " × " +
+        a +
+        (a === 1 ? " alumno" : " alumnos");
+    }
+
+    // Eventos
+    sesiones.addEventListener("input", actualizar);
+    meses.addEventListener("input", actualizar);
+    precio.addEventListener("input", actualizar);
+    alumnos.addEventListener("input", actualizar);
+
+    // Calcular al inicio
+    actualizar();
+  </script>
+</body>
+</html>
