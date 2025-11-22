@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yin Yang | Consulting – Extras</title>
+
+  <style>
+    :root {
+      --rojo: #e53935;
+      --rojo-oscuro: #b71c1c;
+      --negro: #050505;
+      --oro: #ffe082;
+      --crema: #f5f0e6;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #222 0, #050505 55%);
+      color: #f7f7f7;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .layout {
+      max-width: 980px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: rgba(8, 8, 8, 0.9);
+      border-radius: 18px;
+      padding: 22px 24px 26px;
+      border: 2px solid var(--oro);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65);
+    }
+
+    .card-header {
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 10px;
+    }
+
+    .title-main {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      color: #d0d0d0;
+      margin-top: 4px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--rojo-oscuro);
+      color: #fff;
+      border-radius: 999px;
+      padding: 2px 10px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 6px;
+    }
+
+    .checklist {
+      margin: 8px 0 0;
+      padding: 0;
+      list-style: none;
+      font-size: 12px;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .check-icon {
+      font-size: 13px;
+    }
+
+    .section-title {
+      margin-top: 18px;
+      margin-bottom: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--crema);
+    }
+
+    .sliders {
+      margin-top: 8px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 2.4fr) 70px;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .row label {
+      font-size: 13px;
+      color: #f0f0f0;
+    }
+
+    .row small {
+      display: block;
+      font-size: 11px;
+      color: #a0a0a0;
+      margin-top: 2px;
+    }
+
+    .row input[type="range"] {
+      width: 100%;
+      appearance: none;
+      height: 6px;
+      border-radius: 999px;
+      background: #1b3a1c;
+      outline: none;
+    }
+
+    .row input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--rojo);
+      border: 2px solid #000;
+      cursor: pointer;
+      box-shadow: 0 0 0 4px rgba(229, 57, 53, 0.35);
+    }
+
+    .value-box {
+      text-align: center;
+      border-radius: 8px;
+      padding: 6px 4px;
+      font-weight: 600;
+      border: 2px solid var(--crema);
+      background: rgba(10, 10, 10, 0.9);
+      font-size: 13px;
+      color: #fff;
+    }
+
+    .select-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 3.4fr);
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .pill-toggle {
+      display: inline-flex;
+      padding: 3px;
+      border-radius: 999px;
+      background: #151515;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .pill-option {
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      color: #d0d0d0;
+      cursor: pointer;
+    }
+
+    .pill-option.active {
+      background: var(--rojo-oscuro);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    select {
+      width: 100%;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 13px;
+      border: 1px solid #333;
+      background: #101010;
+      color: #f0f0f0;
+      outline: none;
+    }
+
+    /* RESULTADO CLIENTE */
+
+    .result-card {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .result-main-box {
+      border-radius: 18px;
+      padding: 20px 18px 18px;
+      border: 2px solid var(--oro);
+      background: linear-gradient(145deg, #2b0000, #8b0000);
+      text-align: center;
+    }
+
+    .result-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #ffe8c2;
+      margin-bottom: 8px;
+    }
+
+    .result-amount {
+      font-size: 30px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .result-sub {
+      font-size: 12px;
+      color: #ffe8c2;
+      margin-bottom: 10px;
+    }
+
+    .stripe-button {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      border-radius: 999px;
+      background: var(--rojo-oscuro);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border: 2px solid #000;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+    }
+
+    .stripe-button:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .hint {
+      margin-top: 8px;
+      font-size: 11px;
+      color: #f5f0e6;
+      opacity: 0.85;
+    }
+
+    @media (max-width: 860px) {
+      body {
+        padding: 16px;
+      }
+      .layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .row {
+        grid-template-columns: minmax(0, 1.4fr);
+        grid-template-rows: auto auto auto;
+      }
+      .row input[type="range"] {
+        grid-column: 1 / -1;
+      }
+      .value-box {
+        justify-self: flex-end;
+        width: 70px;
+      }
+      .select-row {
+        grid-template-columns: minmax(0, 1.4fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <!-- IZQUIERDA: LO QUE YA TIENE + EXTRAS -->
+    <div class="card">
+      <div class="card-header">
+        <div class="title-main">Yin Yang | Consulting</div>
+        <p class="subtitle">
+          Ya sos parte del programa. Acá podés personalizar <strong>extras opcionales</strong> sobre tu plan actual.
+          El valor base de U$D 1.500 ya está pago, esto sólo suma lo adicional.
+        </p>
+
+        <span class="badge">✅ YA INCLUIDO EN TU PROGRAMA</span>
+        <ul class="checklist">
+          <li><span class="check-icon">✅</span> Llamada inicial de Onboarding personalizado (Tony por defecto).</li>
+          <li><span class="check-icon">✅</span> 8 Consultorías semanales con Cristian / Paul / Consultores.</li>
+          <li><span class="check-icon">✅</span> Canal de voz abierto 24/7 para networking.</li>
+          <li><span class="check-icon">✅</span> 5 canales de feedback para auditorías y seguimiento personalizado.</li>
+          <li><span class="check-icon">✅</span> Roadmap de 3 fases paso a paso.</li>
+          <li><span class="check-icon">✅</span> Comunidad privada con casos de éxito y networking.</li>
+          <li><span class="check-icon">✅</span> Curso “Yin Yang Consulting: de 0 a Líder Social” (+50hs).</li>
+        </ul>
+      </div>
+
+      <div class="section-title">Elegí tus extras</div>
+
+      <div class="sliders">
+        <!-- LLAMADAS 1:1 EXTRA -->
+        <div class="row">
+          <label for="calls">
+            Llamadas 1:1 extra
+            <small>De 0 a 12 sesiones individuales adicionales.</small>
+          </label>
+          <input id="calls" type="range" min="0" max="12" step="1" value="0" />
+          <div class="value-box" id="callsValue">0</div>
+        </div>
+
+        <!-- CHAT PRIVADO EXTRA -->
+        <div class="row">
+          <label for="chatDays">
+            Días extra de chat privado 1:1
+            <small>Máximo igual a los días extra de servicio.</small>
+          </label>
+          <input id="chatDays" type="range" min="0" max="365" step="5" value="0" />
+          <div class="value-box" id="chatDaysValue">0</div>
+        </div>
+
+        <!-- DURACIÓN EXTRA -->
+        <div class="row">
+          <label for="duration">
+            Días extra de servicio
+            <small>De 0 a 365 días adicionales sobre tu plan actual.</small>
+          </label>
+          <input id="duration" type="range" min="0" max="365" step="5" value="0" />
+          <div class="value-box" id="durationValue">0</div>
+        </div>
+
+        <!-- SESIÓN CON CRISTIAN -->
+        <div class="select-row">
+          <div>
+            <label>
+              Sesión estratégica con Cristian
+              <small>Podés sumar una sesión 1:1 extra con Cris.</small>
+            </label>
+          </div>
+          <div class="pill-toggle" id="onboardingToggle">
+            <button class="pill-option active" data-value="no">No sumar</button>
+            <button class="pill-option" data-value="cris">Sumar 1 sesión</button>
+          </div>
+        </div>
+
+        <!-- PLAN DE PAGO (CLIENTE) -->
+        <div class="select-row">
+          <div>
+            <label>Cómo querés pagar las <strong>extras</strong></label>
+          </div>
+          <div>
+            <select id="plan">
+              <option value="1">1 pago (pago único)</option>
+              <option value="2">2 pagos mensuales</option>
+              <option value="3">3 pagos mensuales</option>
+              <option value="4">4 pagos mensuales</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DERECHA: RESUMEN PARA CLIENTE -->
+    <div class="card result-card">
+      <div class="result-main-box">
+        <div class="result-label">TU INVERSIÓN EXTRA ES DE</div>
+        <div class="result-amount" id="mainAmount">$ 0.00</div>
+        <div class="result-sub" id="mainSub">
+          Ajustá los extras para ver el total.
+        </div>
+
+        <a
+          href="https://buy.stripe.com/7sYaEWdjE4Cv5vzfhd6wE01"
+          target="_blank"
+          class="stripe-button"
+        >
+          QUIERO ESTE UPGRADE
+        </a>
+
+        <div class="hint">
+          Este botón te lleva a Stripe. El monto final puede ajustarse según la
+          personalización que definamos juntos.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- Constantes de precio (mismo criterio que tu calculadora interna) ---
+    const PRICE_PER_DAY_BASE = 1500 / 120;     // 12.5 USD por día de servicio
+    const PRICE_PER_CHAT_DAY = 247 / 120;      // proporcional
+    const PRICE_PER_CALL = 497 / 4;            // 1 llamada 1:1
+
+    // Planes de pago (interés interno, no se muestra como % al usuario)
+    const PAYMENT_PLANS = {
+      "1": { installments: 1, interest: 0 },
+      "2": { installments: 2, interest: 1698 / 1500 - 1 },
+      "3": { installments: 3, interest: 2001 / 1500 - 1 },
+      "4": { installments: 4, interest: 2188 / 1500 - 1 },
+    };
+
+    // Inputs
+    const callsInput = document.getElementById("calls");
+    const chatDaysInput = document.getElementById("chatDays");
+    const durationInput = document.getElementById("duration");
+    const planSelect = document.getElementById("plan");
+    const onboardingToggle = document.getElementById("onboardingToggle");
+
+    // Outputs numéricos de sliders
+    const callsValue = document.getElementById("callsValue");
+    const chatDaysValue = document.getElementById("chatDaysValue");
+    const durationValue = document.getElementById("durationValue");
+
+    // Outputs de resultado
+    const mainAmountEl = document.getElementById("mainAmount");
+    const mainSubEl = document.getElementById("mainSub");
+
+    // Extra: sesión con Cristian
+    let addCrisSession = false;
+
+    function formatMoney(n) {
+      return "$ " + n.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+    }
+
+    function actualizar() {
+      let calls = Number(callsInput.value);
+      let chatDays = Number(chatDaysInput.value);
+      let duration = Number(durationInput.value);
+      const plan = PAYMENT_PLANS[planSelect.value];
+
+      // El chat extra no puede ser mayor que los días extra de servicio
+      if (chatDays > duration) {
+        chatDays = duration;
+        chatDaysInput.value = chatDays;
+      }
+
+      // Actualizar numeritos
+      callsValue.textContent = calls;
+      chatDaysValue.textContent = chatDays;
+      durationValue.textContent = duration;
+
+      // Costos extra
+      const costExtraService = duration * PRICE_PER_DAY_BASE;
+      const costExtraChat = chatDays * PRICE_PER_CHAT_DAY;
+      const costExtraCalls = calls * PRICE_PER_CALL;
+      const costCrisSession = addCrisSession ? PRICE_PER_CALL : 0;
+
+      const extrasPIF = costExtraService + costExtraChat + costExtraCalls + costCrisSession;
+
+      if (extrasPIF <= 0) {
+        mainAmountEl.textContent = "$ 0.00";
+        mainSubEl.textContent = "Elegí al menos un extra para ver el total.";
+        return;
+      }
+
+      const totalWithPlan = extrasPIF * (1 + plan.interest);
+      const installment = totalWithPlan / plan.installments;
+
+      const isPIF = planSelect.value === "1";
+
+      if (isPIF) {
+        mainAmountEl.textContent = formatMoney(extrasPIF);
+        mainSubEl.textContent =
+          "1 pago único sobre tu plan actual · Total extra: " + formatMoney(extrasPIF);
+      } else {
+        mainAmountEl.textContent = formatMoney(installment);
+        mainSubEl.textContent =
+          plan.installments +
+          " pagos mensuales de " +
+          formatMoney(installment) +
+          " · Total extra en cuotas: " +
+          formatMoney(totalWithPlan);
+      }
+    }
+
+    // Toggle sesión con Cristian
+    onboardingToggle.addEventListener("click", (e) => {
+      const btn = e.target.closest(".pill-option");
+      if (!btn) return;
+
+      const value = btn.getAttribute("data-value");
+      addCrisSession = value === "cris";
+
+      onboardingToggle
+        .querySelectorAll(".pill-option")
+        .forEach((el) => el.classList.toggle("active", el === btn));
+
+      actualizar();
+    });
+
+    // Eventos
+    callsInput.addEventListener("input", actualizar);
+    chatDaysInput.addEventListener("input", actualizar);
+    durationInput.addEventListener("input", actualizar);
+    planSelect.addEventListener("change", actualizar);
+
+    // Primer render
+    actualizar();
+  </script>
+</body>
+</html>
