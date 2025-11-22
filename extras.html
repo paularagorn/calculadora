@@ -113,11 +113,13 @@
     }
 
     .card {
+      position: relative;
       border-radius: 20px;
       background: linear-gradient(145deg, rgba(12,14,20,0.96), rgba(8,9,15,0.96));
       border: 1px solid var(--border-soft);
       padding: 20px 20px 22px;
       box-shadow: 0 14px 30px rgba(0,0,0,0.6);
+      overflow: hidden;
     }
 
     .card::before {
@@ -321,6 +323,7 @@
       border-radius: 999px;
       background: linear-gradient(90deg, #18351c, #275c2a);
       outline: none;
+      cursor: pointer;
     }
 
     input[type="range"]::-webkit-slider-thumb {
@@ -342,6 +345,23 @@
       border: 2px solid #000;
       box-shadow: 0 0 0 5px rgba(198,40,40,0.45);
       cursor: pointer;
+    }
+
+    input[type="range"]:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    input[type="range"]:disabled::-webkit-slider-thumb {
+      cursor: not-allowed;
+      box-shadow: none;
+      background: #777;
+    }
+
+    input[type="range"]:disabled::-moz-range-thumb {
+      cursor: not-allowed;
+      box-shadow: none;
+      background: #777;
     }
 
     .value-box {
@@ -417,7 +437,7 @@
     .result-detail {
       font-size: 11px;
       color: rgba(249,250,251,0.78);
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     .muted {
@@ -462,33 +482,15 @@
       color: var(--gold-soft);
     }
 
-    /* Casos de éxito */
-    .success-card {
-      margin-top: 22px;
-      border-radius: 20px;
-      padding: 18px 18px 20px;
-      background: radial-gradient(circle at top, rgba(255,255,255,0.04) 0, transparent 45%),
-                  #050608;
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.7);
-      position: relative;
-      overflow: hidden;
+    /* Casos de éxito dentro del panel derecho */
+    .success-right {
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,0.08);
     }
 
-    .success-card::before {
-      content: "";
-      position: absolute;
-      inset: -60px;
-      background-image: url("yin-yang-logo.png");
-      background-repeat: no-repeat;
-      background-position: 110% 0%;
-      background-size: 260px 260px;
-      opacity: 0.04;
-      pointer-events: none;
-    }
-
-    .success-title {
-      font-size: 14px;
+    .success-right-title {
+      font-size: 12px;
       font-weight: 600;
       letter-spacing: 0.14em;
       text-transform: uppercase;
@@ -496,47 +498,43 @@
       margin-bottom: 4px;
     }
 
-    .success-sub {
+    .success-right-sub {
       font-size: 11px;
       color: var(--text-soft);
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
 
-    .success-list {
+    .success-right-list {
       display: flex;
       flex-direction: column;
+      gap: 8px;
+    }
+
+    .success-right-item {
+      display: flex;
+      align-items: center;
       gap: 10px;
     }
 
-    .success-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
     .avatar {
-      width: 42px;
-      height: 42px;
+      width: 36px;
+      height: 36px;
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #ffffff 0, #bbbbbb 35%, #202020 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      font-weight: 600;
-      color: #000;
-      flex-shrink: 0;
-      border: 1px solid rgba(255,255,255,0.3);
       overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.4);
+      flex-shrink: 0;
     }
 
-    .avatar span {
-      mix-blend-mode: multiply;
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
-    .success-text {
-      font-size: 12px;
-      line-height: 1.36;
+    .success-right-text {
+      font-size: 11px;
+      line-height: 1.35;
     }
 
     .handle {
@@ -548,7 +546,6 @@
       color: var(--accent-soft);
       font-weight: 600;
     }
-
   </style>
 </head>
 <body>
@@ -593,7 +590,7 @@
         <!-- DÍAS DE MENTORÍA TRANSCURRIDOS -->
         <div class="input-inline">
           <label for="daysUsed">¿Cuántos días de mentoría llevás?</label>
-          <input id="daysUsed" type="number" min="0" max="120" value="0" />
+          <input id="daysUsed" type="number" min="0" max="120" placeholder="Ej: 45" />
         </div>
         <div class="small-hint">
           La mentoría base dura <strong>120 días</strong>. Poné los días desde que firmaste
@@ -608,9 +605,11 @@
                 Días de chat privado 1:1 extra
                 <small>Acceso directo a tu mentor para dudas rápidas.</small>
               </label>
-              <div class="max-hint" id="chatMaxHint"></div>
+              <div class="max-hint" id="chatMaxHint">
+                Primero completá tus días de mentoría para ver el máximo disponible.
+              </div>
             </div>
-            <input id="chatRange" type="range" min="0" max="0" step="5" value="0" />
+            <input id="chatRange" type="range" min="0" max="0" step="5" value="0" disabled />
             <div class="value-box" id="chatValue">0</div>
           </div>
 
@@ -622,7 +621,7 @@
                 <small>Calls de profundidad para trabajar tu caso puntual.</small>
               </label>
             </div>
-            <input id="callsRange" type="range" min="0" max="12" step="1" value="0" />
+            <input id="callsRange" type="range" min="0" max="12" step="1" value="0" disabled />
             <div class="value-box" id="callsValue">0</div>
           </div>
 
@@ -634,21 +633,21 @@
                 <small>Extendé la duración total de tu acompañamiento.</small>
               </label>
             </div>
-            <input id="durationRange" type="range" min="0" max="365" step="5" value="0" />
+            <input id="durationRange" type="range" min="0" max="365" step="5" value="0" disabled />
             <div class="value-box" id="durationValue">0</div>
           </div>
         </div>
       </div>
 
-      <!-- DERECHA: RESUMEN -->
+      <!-- DERECHA: RESUMEN + CASOS DE ÉXITO -->
       <div class="card card-right">
         <div class="result-label">Tu inversión extra estimada</div>
         <div class="result-amount" id="mainAmount">$ 0.00</div>
         <div class="result-sub" id="mainSub">
-          Ajustá los extras de la izquierda para ver el total.
+          Primero poné los días de mentoría que llevás para activar los extras.
         </div>
         <div class="result-detail muted" id="detailText">
-          No estás agregando ningún extra todavía.
+          Usá los deslizadores para sumar llamadas, chat o días extra arriba de tu programa actual.
         </div>
 
         <a
@@ -663,59 +662,71 @@
           Si personalizás mucho tu plan, coordinamos el ajuste del monto
           exacto con tu closer por mensaje.
         </div>
+
+        <!-- Casos de éxito justo debajo del precio -->
+        <div class="success-right">
+          <div class="success-right-title">
+            Casos de éxito que entraron al círculo privado
+          </div>
+          <div class="success-right-sub">
+            Algunas de las personas que aprovecharon este tipo de acompañamiento y hoy
+            juegan en otra liga:
+          </div>
+
+          <div class="success-right-list">
+            <div class="success-right-item">
+              <div class="avatar">
+                <img src="guillermo.jpg" alt="Guillermo Olondriz">
+              </div>
+              <div class="success-right-text">
+                <div class="handle">@Guillermo.olondriz</div>
+                <div><span class="accent-text">+6 años en pareja</span> con una mujer tradicional que conoció durante el día.</div>
+              </div>
+            </div>
+
+            <div class="success-right-item">
+              <div class="avatar">
+                <img src="marcelo.jpg" alt="Marcelo Jiménez">
+              </div>
+              <div class="success-right-text">
+                <div class="handle">@Marcelo.jimenezarg</div>
+                <div>Dueño de negocio <span class="accent-text">exitoso</span> teniendo 2 citas por día, experto en conocer personas durante el día.</div>
+              </div>
+            </div>
+
+            <div class="success-right-item">
+              <div class="avatar">
+                <img src="alex.jpg" alt="Alex Carrera">
+              </div>
+              <div class="success-right-text">
+                <div class="handle">@Alexmcarrera</div>
+                <div>Viajando por el mundo <span class="accent-text">conociendo a las que quiere</span> mientras escala su negocio a las 7 cifras.</div>
+              </div>
+            </div>
+
+            <div class="success-right-item">
+              <div class="avatar">
+                <img src="paul.jpg" alt="Paul Aragorn">
+              </div>
+              <div class="success-right-text">
+                <div class="handle">@Paul.aragorn</div>
+                <div>Mi mejor caso de éxito: lo llevé de CERO a ser el mejor de Argentina, <span class="accent-text">gran comunicador y empresario</span>.</div>
+              </div>
+            </div>
+
+            <div class="success-right-item">
+              <div class="avatar">
+                <img src="julian.jpg" alt="Julián Valnav">
+              </div>
+              <div class="success-right-text">
+                <div class="handle">@ojulianvalnav</div>
+                <div>Político de importante agrupación <span class="accent-text">mejoró 10X</span> su comunicación en público.</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-    </div>
-
-    <!-- CASOS DE ÉXITO -->
-    <div class="success-card">
-      <div class="success-title">Casos de Éxito que entraron al círculo privado</div>
-      <div class="success-sub">
-        Algunas de las personas que aprovecharon este tipo de acompañamiento y hoy
-        juegan en otra liga:
-      </div>
-
-      <div class="success-list">
-        <div class="success-item">
-          <div class="avatar"><span>G</span></div>
-          <div class="success-text">
-            <div class="handle">@Guillermo.olondriz</div>
-            <div><span class="accent-text">+6 años en pareja</span> con una mujer tradicional que conoció durante el día.</div>
-          </div>
-        </div>
-
-        <div class="success-item">
-          <div class="avatar"><span>M</span></div>
-          <div class="success-text">
-            <div class="handle">@Marcelo.jimenezarg</div>
-            <div>Dueño de negocio <span class="accent-text">exitoso</span> teniendo 2 citas por día, experto en conocer personas durante el día.</div>
-          </div>
-        </div>
-
-        <div class="success-item">
-          <div class="avatar"><span>A</span></div>
-          <div class="success-text">
-            <div class="handle">@Alexmcarrera</div>
-            <div>Viajando por el mundo <span class="accent-text">conociendo a las que quiere</span> mientras escala su negocio a las 7 cifras.</div>
-          </div>
-        </div>
-
-        <div class="success-item">
-          <div class="avatar"><span>P</span></div>
-          <div class="success-text">
-            <div class="handle">@Paul.aragorn</div>
-            <div>Mi mejor caso de éxito: lo llevé de CERO a ser el mejor de Argentina, <span class="accent-text">gran comunicador y empresario</span>.</div>
-          </div>
-        </div>
-
-        <div class="success-item">
-          <div class="avatar"><span>J</span></div>
-          <div class="success-text">
-            <div class="handle">@ojulianvalnav</div>
-            <div>Político de importante agrupación <span class="accent-text">mejoró 10X</span> su comunicación en público.</div>
-          </div>
-        </div>
-      </div>
     </div>
 
   </div>
@@ -724,7 +735,7 @@
 <script>
   const TOTAL_MENTORIA_DAYS = 120;
 
-  // Precios base (mismos que usás internamente)
+  // Precios base
   const PRICE_PER_CHAT_DAY = 247 / 120;   // chat privado por día
   const PRICE_PER_CALL = 497 / 4;        // 1 llamada 1:1
   const PRICE_PER_DAY_BASE = 1500 / 120; // día extra de servicio
@@ -754,11 +765,42 @@
   }
 
   function actualizar() {
-    let daysUsed = Number(daysUsedInput.value);
+    const raw = daysUsedInput.value.trim();
+
+    // Si no completó los días, bloqueamos los toggles
+    if (raw === "") {
+      chatRange.disabled = true;
+      callsRange.disabled = true;
+      durationRange.disabled = true;
+
+      chatRange.value = 0;
+      callsRange.value = 0;
+      durationRange.value = 0;
+
+      chatValue.textContent = "0";
+      callsValue.textContent = "0";
+      durationValue.textContent = "0";
+
+      mainAmountEl.textContent = "$ 0.00";
+      mainSubEl.textContent =
+        "Primero poné los días de mentoría que llevás para activar los extras.";
+      detailTextEl.textContent =
+        "Usá los deslizadores para sumar llamadas, chat o días extra arriba de tu programa actual.";
+      chatMaxHint.textContent =
+        "Primero completá tus días de mentoría para ver el máximo disponible.";
+      return;
+    }
+
+    let daysUsed = Number(raw);
     if (isNaN(daysUsed)) daysUsed = 0;
     if (daysUsed < 0) daysUsed = 0;
     if (daysUsed > TOTAL_MENTORIA_DAYS) daysUsed = TOTAL_MENTORIA_DAYS;
     daysUsedInput.value = daysUsed;
+
+    // Habilitamos sliders
+    chatRange.disabled = false;
+    callsRange.disabled = false;
+    durationRange.disabled = false;
 
     const extraDays = Number(durationRange.value);
     let maxChat = TOTAL_MENTORIA_DAYS - daysUsed + extraDays;
@@ -790,7 +832,7 @@
     if (total === 0) {
       mainSubEl.textContent = "Aún no agregaste extras.";
       detailTextEl.textContent =
-        "Usá los deslizadores para sumar llamadas, chat o días extra arriba de tu programa actual.";
+        "Mové los deslizadores para ver cuánto sale sumar chat, sesiones 1:1 o días extra.";
     } else {
       mainSubEl.textContent = "Monto estimado en pago único por extras.";
 
