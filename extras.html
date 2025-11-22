@@ -3,15 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Yin Yang | Consulting – Extras</title>
+  <title>Extras de tu Programa | Yin Yang Consulting</title>
+
+  <!-- Tipografía elegante -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --rojo: #e53935;
-      --rojo-oscuro: #b71c1c;
-      --negro: #050505;
-      --oro: #ffe082;
-      --crema: #f5f0e6;
+      --bg: #050608;
+      --card-dark: #101218;
+      --card-light: #f5f5f7;
+      --gold: #d4af37;
+      --gold-soft: #f7e7a9;
+      --accent: #c62828;
+      --text-main: #f9fafb;
+      --text-soft: #c5cad3;
+      --border-soft: rgba(255, 255, 255, 0.12);
     }
 
     * {
@@ -20,377 +29,441 @@
 
     body {
       margin: 0;
-      padding: 24px;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #222 0, #050505 55%);
-      color: #f7f7f7;
+      padding: 0;
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #151821 0, #050608 55%);
+      color: var(--text-main);
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: flex-start;
+    }
+
+    /* Fondo tipo mosaico elegante */
+    .page {
+      position: relative;
+      width: 100%;
       min-height: 100vh;
+      padding: 32px 16px;
+      overflow: hidden;
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: -120px;
+      background-image:
+        linear-gradient(135deg, rgba(255,255,255,0.03) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0.03) 75%, transparent 75%, transparent),
+        linear-gradient(225deg, rgba(255,255,255,0.02) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0.02) 75%, transparent 75%, transparent);
+      background-size: 120px 120px;
+      opacity: 0.65;
+      pointer-events: none;
+    }
+
+    .page-inner {
+      position: relative;
+      max-width: 1120px;
+      margin: 0 auto;
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.08) 0, transparent 45%),
+                  radial-gradient(circle at bottom right, rgba(255,255,255,0.06) 0, transparent 50%),
+                  rgba(5,6,10,0.96);
+      border-radius: 26px;
+      border: 1px solid rgba(212,175,55,0.5);
+      padding: 26px 26px 28px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.85);
+      backdrop-filter: blur(16px);
     }
 
     .layout {
-      max-width: 980px;
-      width: 100%;
       display: grid;
       grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
-      gap: 20px;
+      gap: 26px;
+    }
+
+    @media (max-width: 880px) {
+      .layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .page-inner {
+        padding: 20px;
+      }
     }
 
     .card {
-      background: rgba(8, 8, 8, 0.9);
-      border-radius: 18px;
-      padding: 22px 24px 26px;
-      border: 2px solid var(--oro);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65);
+      border-radius: 20px;
+      background: linear-gradient(145deg, rgba(12,14,20,0.96), rgba(8,9,15,0.96));
+      border: 1px solid var(--border-soft);
+      padding: 20px 20px 22px;
+      box-shadow: 0 14px 30px rgba(0,0,0,0.6);
     }
 
-    .card-header {
-      margin-bottom: 12px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      padding-bottom: 10px;
+    .card-right {
+      background: linear-gradient(145deg, #1b1010, #090404);
+      border: 1px solid rgba(212,175,55,0.7);
+      padding: 22px 22px 24px;
+    }
+
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .logo-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-mark::before {
+      content: "";
+      position: absolute;
+      width: 180%;
+      height: 180%;
+      background: conic-gradient(from 0deg, transparent 0deg, rgba(212,175,55,0.45) 40deg, transparent 80deg);
+      animation: spin 12s linear infinite;
+      opacity: 0.7;
+    }
+
+    .logo-inner {
+      position: relative;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: #050608;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .title-block {
+      flex: 1;
     }
 
     .title-main {
       font-size: 22px;
-      font-weight: 800;
-      letter-spacing: 0.04em;
+      font-weight: 700;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: #fff;
     }
 
     .subtitle {
-      font-size: 12px;
-      color: #d0d0d0;
       margin-top: 4px;
+      font-size: 12px;
+      color: var(--text-soft);
     }
 
     .badge {
-      display: inline-block;
-      background: var(--rojo-oscuro);
-      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      padding: 4px 10px;
       border-radius: 999px;
-      padding: 2px 10px;
-      font-size: 10px;
+      background: rgba(20,40,20,0.95);
+      color: #e3f7e9;
+      border: 1px solid rgba(76,175,80,0.7);
+      margin-top: 10px;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #4caf50;
     }
 
     .checklist {
-      margin: 8px 0 0;
+      margin: 14px 0 0;
       padding: 0;
       list-style: none;
       font-size: 12px;
+      color: #e4e7f2;
     }
 
     .checklist li {
+      margin-bottom: 6px;
       display: flex;
-      align-items: flex-start;
-      gap: 6px;
-      margin-bottom: 4px;
+      gap: 8px;
     }
 
     .check-icon {
-      font-size: 13px;
+      color: #4caf50;
+      font-size: 14px;
     }
 
     .section-title {
       margin-top: 18px;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
+      font-weight: 600;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--crema);
+      color: var(--gold-soft);
     }
 
-    .sliders {
-      margin-top: 8px;
+    .section-sub {
+      font-size: 11px;
+      color: var(--text-soft);
+      margin-bottom: 16px;
+    }
+
+    .extras-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
 
     .row {
       display: grid;
-      grid-template-columns: minmax(0, 1.5fr) minmax(0, 2.4fr) 70px;
+      grid-template-columns: minmax(0, 1.9fr) minmax(0, 2.5fr) 70px;
       align-items: center;
       gap: 10px;
-      margin-bottom: 16px;
+    }
+
+    @media (max-width: 720px) {
+      .row {
+        grid-template-columns: minmax(0, 1.6fr) minmax(0, 2.1fr);
+        grid-template-rows: auto auto;
+      }
+      .row .value-box {
+        justify-self: flex-end;
+        margin-top: 6px;
+      }
     }
 
     .row label {
       font-size: 13px;
-      color: #f0f0f0;
+      font-weight: 500;
     }
 
     .row small {
       display: block;
       font-size: 11px;
-      color: #a0a0a0;
+      color: var(--text-soft);
       margin-top: 2px;
     }
 
-    .row input[type="range"] {
+    input[type="range"] {
       width: 100%;
       appearance: none;
       height: 6px;
       border-radius: 999px;
-      background: #1b3a1c;
+      background: linear-gradient(90deg, #18351c, #275c2a);
       outline: none;
     }
 
-    .row input[type="range"]::-webkit-slider-thumb {
+    input[type="range"]::-webkit-slider-thumb {
       appearance: none;
       width: 18px;
       height: 18px;
-      border-radius: 50%;
-      background: var(--rojo);
+      border-radius: 999px;
+      background: var(--accent);
       border: 2px solid #000;
+      box-shadow: 0 0 0 5px rgba(198,40,40,0.45);
       cursor: pointer;
-      box-shadow: 0 0 0 4px rgba(229, 57, 53, 0.35);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: var(--accent);
+      border: 2px solid #000;
+      box-shadow: 0 0 0 5px rgba(198,40,40,0.45);
+      cursor: pointer;
     }
 
     .value-box {
       text-align: center;
-      border-radius: 8px;
+      border-radius: 999px;
       padding: 6px 4px;
       font-weight: 600;
-      border: 2px solid var(--crema);
-      background: rgba(10, 10, 10, 0.9);
+      border: 1px solid rgba(245, 245, 245, 0.6);
+      background: rgba(5, 6, 10, 0.95);
       font-size: 13px;
-      color: #fff;
+      color: var(--text-main);
+      min-width: 52px;
     }
 
-    .select-row {
-      display: grid;
-      grid-template-columns: minmax(0, 1.5fr) minmax(0, 3.4fr);
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-
-    .pill-toggle {
-      display: inline-flex;
-      padding: 3px;
-      border-radius: 999px;
-      background: #151515;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-    }
-
-    .pill-option {
-      font-size: 12px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: none;
-      background: transparent;
-      color: #d0d0d0;
-      cursor: pointer;
-    }
-
-    .pill-option.active {
-      background: var(--rojo-oscuro);
-      color: #fff;
-      font-weight: 600;
-    }
-
-    select {
-      width: 100%;
-      border-radius: 999px;
-      padding: 6px 10px;
-      font-size: 13px;
-      border: 1px solid #333;
-      background: #101010;
-      color: #f0f0f0;
-      outline: none;
-    }
-
-    /* RESULTADO CLIENTE */
-
-    .result-card {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .result-main-box {
-      border-radius: 18px;
-      padding: 20px 18px 18px;
-      border: 2px solid var(--oro);
-      background: linear-gradient(145deg, #2b0000, #8b0000);
-      text-align: center;
-    }
-
+    /* Card derecha (resumen) */
     .result-label {
       font-size: 12px;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #ffe8c2;
-      margin-bottom: 8px;
-    }
-
-    .result-amount {
-      font-size: 30px;
-      font-weight: 800;
-      color: #ffffff;
-      margin-bottom: 6px;
-    }
-
-    .result-sub {
-      font-size: 12px;
-      color: #ffe8c2;
+      letter-spacing: 0.16em;
+      color: var(--gold-soft);
       margin-bottom: 10px;
     }
 
+    .result-amount {
+      font-size: 32px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .result-sub {
+      font-size: 13px;
+      color: #f3f4ff;
+      margin-bottom: 12px;
+    }
+
+    .result-detail {
+      font-size: 11px;
+      color: rgba(249,250,251,0.78);
+      margin-bottom: 16px;
+    }
+
+    .muted {
+      opacity: 0.8;
+    }
+
     .stripe-button {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 10px 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 18px;
       border-radius: 999px;
-      background: var(--rojo-oscuro);
-      color: #fff;
-      font-size: 14px;
+      border: 1px solid #000;
+      background: linear-gradient(135deg, var(--gold), #ffecb3);
+      color: #1b1304;
+      font-size: 13px;
       font-weight: 600;
-      text-decoration: none;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      border: 2px solid #000;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      box-shadow: 0 14px 28px rgba(0,0,0,0.7);
       cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    .stripe-button span {
+      font-size: 14px;
     }
 
     .stripe-button:hover {
-      filter: brightness(1.1);
+      filter: brightness(1.06);
       transform: translateY(-1px);
     }
 
     .hint {
-      margin-top: 8px;
       font-size: 11px;
-      color: #f5f0e6;
-      opacity: 0.85;
+      color: rgba(250,250,252,0.82);
     }
 
-    @media (max-width: 860px) {
-      body {
-        padding: 16px;
-      }
-      .layout {
-        grid-template-columns: minmax(0, 1fr);
-      }
+    .hint strong {
+      color: var(--gold-soft);
     }
 
-    @media (max-width: 600px) {
-      .row {
-        grid-template-columns: minmax(0, 1.4fr);
-        grid-template-rows: auto auto auto;
-      }
-      .row input[type="range"] {
-        grid-column: 1 / -1;
-      }
-      .value-box {
-        justify-self: flex-end;
-        width: 70px;
-      }
-      .select-row {
-        grid-template-columns: minmax(0, 1.4fr);
-      }
-    }
   </style>
 </head>
 <body>
-  <div class="layout">
-    <!-- IZQUIERDA: LO QUE YA TIENE + EXTRAS -->
-    <div class="card">
-      <div class="card-header">
-        <div class="title-main">Yin Yang | Consulting</div>
-        <p class="subtitle">
-          Ya sos parte del programa. Acá podés personalizar <strong>extras opcionales</strong> sobre tu plan actual.
-          El valor base de U$D 1.500 ya está pago, esto sólo suma lo adicional.
+<div class="page">
+  <div class="page-inner">
+    <div class="layout">
+
+      <!-- IZQUIERDA: PROGRAMA + EXTRAS -->
+      <div class="card">
+        <div class="header">
+          <div class="logo-mark">
+            <div class="logo-inner">YY</div>
+          </div>
+          <div class="title-block">
+            <div class="title-main">Yin Yang | Consulting</div>
+            <p class="subtitle">
+              Ya sos parte del programa. Acá podés sumar <strong>extras opcionales</strong>
+              sobre tu plan actual. El valor base de U$D 1.500 ya está pago.
+            </p>
+            <div class="badge">
+              <span class="badge-dot"></span> Incluido en tu matrícula
+            </div>
+          </div>
+        </div>
+
+        <ul class="checklist">
+          <li><span class="check-icon">✔</span><span>Llamada inicial de onboarding personalizado.</span></li>
+          <li><span class="check-icon">✔</span><span>8 consultorías semanales con Cristian / Paul / consultores.</span></li>
+          <li><span class="check-icon">✔</span><span>Canal de voz abierto 24/7 para networking.</span></li>
+          <li><span class="check-icon">✔</span><span>5 canales de feedback para auditorías y seguimiento personalizado.</span></li>
+          <li><span class="check-icon">✔</span><span>Roadmap de 3 fases paso a paso.</span></li>
+          <li><span class="check-icon">✔</span><span>Comunidad privada con casos de éxito y networking.</span></li>
+          <li><span class="check-icon">✔</span><span>Curso “Yin Yang Consulting: de 0 a Líder Social” (+50hs).</span></li>
+        </ul>
+
+        <div class="section-title">Extras que podés sumar</div>
+        <p class="section-sub">
+          Mové los deslizadores para ver cuánto saldría extender tu programa
+          con más tiempo, chat directo y sesiones 1:1 adicionales.
         </p>
 
-        <span class="badge">✅ YA INCLUIDO EN TU PROGRAMA</span>
-        <ul class="checklist">
-          <li><span class="check-icon">✅</span> Llamada inicial de Onboarding personalizado (Tony por defecto).</li>
-          <li><span class="check-icon">✅</span> 8 Consultorías semanales con Cristian / Paul / Consultores.</li>
-          <li><span class="check-icon">✅</span> Canal de voz abierto 24/7 para networking.</li>
-          <li><span class="check-icon">✅</span> 5 canales de feedback para auditorías y seguimiento personalizado.</li>
-          <li><span class="check-icon">✅</span> Roadmap de 3 fases paso a paso.</li>
-          <li><span class="check-icon">✅</span> Comunidad privada con casos de éxito y networking.</li>
-          <li><span class="check-icon">✅</span> Curso “Yin Yang Consulting: de 0 a Líder Social” (+50hs).</li>
-        </ul>
-      </div>
-
-      <div class="section-title">Elegí tus extras</div>
-
-      <div class="sliders">
-        <!-- LLAMADAS 1:1 EXTRA -->
-        <div class="row">
-          <label for="calls">
-            Llamadas 1:1 extra
-            <small>De 0 a 12 sesiones individuales adicionales.</small>
-          </label>
-          <input id="calls" type="range" min="0" max="12" step="1" value="0" />
-          <div class="value-box" id="callsValue">0</div>
-        </div>
-
-        <!-- CHAT PRIVADO EXTRA -->
-        <div class="row">
-          <label for="chatDays">
-            Días extra de chat privado 1:1
-            <small>Máximo igual a los días extra de servicio.</small>
-          </label>
-          <input id="chatDays" type="range" min="0" max="365" step="5" value="0" />
-          <div class="value-box" id="chatDaysValue">0</div>
-        </div>
-
-        <!-- DURACIÓN EXTRA -->
-        <div class="row">
-          <label for="duration">
-            Días extra de servicio
-            <small>De 0 a 365 días adicionales sobre tu plan actual.</small>
-          </label>
-          <input id="duration" type="range" min="0" max="365" step="5" value="0" />
-          <div class="value-box" id="durationValue">0</div>
-        </div>
-
-        <!-- SESIÓN CON CRISTIAN -->
-        <div class="select-row">
-          <div>
-            <label>
-              Sesión estratégica con Cristian
-              <small>Podés sumar una sesión 1:1 extra con Cris.</small>
-            </label>
+        <div class="extras-list">
+          <!-- DÍAS DE CHAT -->
+          <div class="row">
+            <div>
+              <label for="chatRange">
+                Días de chat privado 1:1 extra
+                <small>Acceso directo a tu mentor para dudas rápidas.</small>
+              </label>
+            </div>
+            <input id="chatRange" type="range" min="0" max="365" step="5" value="0" />
+            <div class="value-box" id="chatValue">0</div>
           </div>
-          <div class="pill-toggle" id="onboardingToggle">
-            <button class="pill-option active" data-value="no">No sumar</button>
-            <button class="pill-option" data-value="cris">Sumar 1 sesión</button>
-          </div>
-        </div>
 
-        <!-- PLAN DE PAGO (CLIENTE) -->
-        <div class="select-row">
-          <div>
-            <label>Cómo querés pagar las <strong>extras</strong></label>
+          <!-- SESIONES 1:1 -->
+          <div class="row">
+            <div>
+              <label for="callsRange">
+                Sesiones 1:1 adicionales
+                <small>Calls de profundidad para trabajar tu caso puntual.</small>
+              </label>
+            </div>
+            <input id="callsRange" type="range" min="0" max="12" step="1" value="0" />
+            <div class="value-box" id="callsValue">0</div>
           </div>
-          <div>
-            <select id="plan">
-              <option value="1">1 pago (pago único)</option>
-              <option value="2">2 pagos mensuales</option>
-              <option value="3">3 pagos mensuales</option>
-              <option value="4">4 pagos mensuales</option>
-            </select>
+
+          <!-- DÍAS EXTRA DE SERVICIO -->
+          <div class="row">
+            <div>
+              <label for="durationRange">
+                Días extra de acceso al programa
+                <small>Extendé la duración total de tu acompañamiento.</small>
+              </label>
+            </div>
+            <input id="durationRange" type="range" min="0" max="365" step="5" value="0" />
+            <div class="value-box" id="durationValue">0</div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- DERECHA: RESUMEN PARA CLIENTE -->
-    <div class="card result-card">
-      <div class="result-main-box">
-        <div class="result-label">TU INVERSIÓN EXTRA ES DE</div>
+      <!-- DERECHA: RESUMEN -->
+      <div class="card card-right">
+        <div class="result-label">Tu inversión extra estimada</div>
         <div class="result-amount" id="mainAmount">$ 0.00</div>
         <div class="result-sub" id="mainSub">
-          Ajustá los extras para ver el total.
+          Ajustá los extras de la izquierda para ver el total.
+        </div>
+        <div class="result-detail muted" id="detailText">
+          No estás agregando ningún extra todavía.
         </div>
 
         <a
@@ -398,131 +471,84 @@
           target="_blank"
           class="stripe-button"
         >
-          QUIERO ESTE UPGRADE
+          <span>Ir a Stripe</span>
         </a>
-
         <div class="hint">
-          Este botón te lleva a Stripe. El monto final puede ajustarse según la
-          personalización que definamos juntos.
+          <strong>Importante:</strong> el botón abre el checkout estándar de Yin Yang.  
+          Si personalizás mucho tu plan, coordinamos el ajuste del monto
+          exacto con tu closer por mensaje.
         </div>
       </div>
+
     </div>
   </div>
+</div>
 
-  <script>
-    // --- Constantes de precio (mismo criterio que tu calculadora interna) ---
-    const PRICE_PER_DAY_BASE = 1500 / 120;     // 12.5 USD por día de servicio
-    const PRICE_PER_CHAT_DAY = 247 / 120;      // proporcional
-    const PRICE_PER_CALL = 497 / 4;            // 1 llamada 1:1
+<script>
+  // Precios base (mismos que usás internamente)
+  const PRICE_PER_CHAT_DAY = 247 / 120;   // chat privado por día
+  const PRICE_PER_CALL = 497 / 4;        // 1 llamada 1:1
+  const PRICE_PER_DAY_BASE = 1500 / 120; // día extra de servicio
 
-    // Planes de pago (interés interno, no se muestra como % al usuario)
-    const PAYMENT_PLANS = {
-      "1": { installments: 1, interest: 0 },
-      "2": { installments: 2, interest: 1698 / 1500 - 1 },
-      "3": { installments: 3, interest: 2001 / 1500 - 1 },
-      "4": { installments: 4, interest: 2188 / 1500 - 1 },
-    };
+  // Inputs
+  const chatRange = document.getElementById("chatRange");
+  const callsRange = document.getElementById("callsRange");
+  const durationRange = document.getElementById("durationRange");
 
-    // Inputs
-    const callsInput = document.getElementById("calls");
-    const chatDaysInput = document.getElementById("chatDays");
-    const durationInput = document.getElementById("duration");
-    const planSelect = document.getElementById("plan");
-    const onboardingToggle = document.getElementById("onboardingToggle");
+  // Outputs numéricos
+  const chatValue = document.getElementById("chatValue");
+  const callsValue = document.getElementById("callsValue");
+  const durationValue = document.getElementById("durationValue");
 
-    // Outputs numéricos de sliders
-    const callsValue = document.getElementById("callsValue");
-    const chatDaysValue = document.getElementById("chatDaysValue");
-    const durationValue = document.getElementById("durationValue");
+  // Resultado
+  const mainAmountEl = document.getElementById("mainAmount");
+  const mainSubEl = document.getElementById("mainSub");
+  const detailTextEl = document.getElementById("detailText");
 
-    // Outputs de resultado
-    const mainAmountEl = document.getElementById("mainAmount");
-    const mainSubEl = document.getElementById("mainSub");
-
-    // Extra: sesión con Cristian
-    let addCrisSession = false;
-
-    function formatMoney(n) {
-      return "$ " + n.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      });
-    }
-
-    function actualizar() {
-      let calls = Number(callsInput.value);
-      let chatDays = Number(chatDaysInput.value);
-      let duration = Number(durationInput.value);
-      const plan = PAYMENT_PLANS[planSelect.value];
-
-      // El chat extra no puede ser mayor que los días extra de servicio
-      if (chatDays > duration) {
-        chatDays = duration;
-        chatDaysInput.value = chatDays;
-      }
-
-      // Actualizar numeritos
-      callsValue.textContent = calls;
-      chatDaysValue.textContent = chatDays;
-      durationValue.textContent = duration;
-
-      // Costos extra
-      const costExtraService = duration * PRICE_PER_DAY_BASE;
-      const costExtraChat = chatDays * PRICE_PER_CHAT_DAY;
-      const costExtraCalls = calls * PRICE_PER_CALL;
-      const costCrisSession = addCrisSession ? PRICE_PER_CALL : 0;
-
-      const extrasPIF = costExtraService + costExtraChat + costExtraCalls + costCrisSession;
-
-      if (extrasPIF <= 0) {
-        mainAmountEl.textContent = "$ 0.00";
-        mainSubEl.textContent = "Elegí al menos un extra para ver el total.";
-        return;
-      }
-
-      const totalWithPlan = extrasPIF * (1 + plan.interest);
-      const installment = totalWithPlan / plan.installments;
-
-      const isPIF = planSelect.value === "1";
-
-      if (isPIF) {
-        mainAmountEl.textContent = formatMoney(extrasPIF);
-        mainSubEl.textContent =
-          "1 pago único sobre tu plan actual · Total extra: " + formatMoney(extrasPIF);
-      } else {
-        mainAmountEl.textContent = formatMoney(installment);
-        mainSubEl.textContent =
-          plan.installments +
-          " pagos mensuales de " +
-          formatMoney(installment) +
-          " · Total extra en cuotas: " +
-          formatMoney(totalWithPlan);
-      }
-    }
-
-    // Toggle sesión con Cristian
-    onboardingToggle.addEventListener("click", (e) => {
-      const btn = e.target.closest(".pill-option");
-      if (!btn) return;
-
-      const value = btn.getAttribute("data-value");
-      addCrisSession = value === "cris";
-
-      onboardingToggle
-        .querySelectorAll(".pill-option")
-        .forEach((el) => el.classList.toggle("active", el === btn));
-
-      actualizar();
+  function formatMoney(n) {
+    return "$ " + n.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
     });
+  }
 
-    // Eventos
-    callsInput.addEventListener("input", actualizar);
-    chatDaysInput.addEventListener("input", actualizar);
-    durationInput.addEventListener("input", actualizar);
-    planSelect.addEventListener("change", actualizar);
+  function actualizar() {
+    const chatDays = Number(chatRange.value);
+    const calls = Number(callsRange.value);
+    const extraDays = Number(durationRange.value);
 
-    // Primer render
-    actualizar();
-  </script>
+    chatValue.textContent = chatDays;
+    callsValue.textContent = calls;
+    durationValue.textContent = extraDays;
+
+    const costChat = chatDays * PRICE_PER_CHAT_DAY;
+    const costCalls = calls * PRICE_PER_CALL;
+    const costDays = extraDays * PRICE_PER_DAY_BASE;
+
+    const total = costChat + costCalls + costDays;
+
+    mainAmountEl.textContent = formatMoney(total);
+
+    if (total === 0) {
+      mainSubEl.textContent = "Aún no agregaste extras.";
+      detailTextEl.textContent =
+        "Usá los deslizadores para sumar llamadas, chat o días extra arriba de tu programa actual.";
+    } else {
+      mainSubEl.textContent = "Monto estimado en pago único por extras.";
+      let parts = [];
+      if (chatDays > 0) parts.push(chatDays + " días de chat privado");
+      if (calls > 0) parts.push(calls + " sesiones 1:1 adicionales");
+      if (extraDays > 0) parts.push(extraDays + " días extra de acceso");
+
+      detailTextEl.textContent = "Incluye: " + parts.join(" · ");
+    }
+  }
+
+  chatRange.addEventListener("input", actualizar);
+  callsRange.addEventListener("input", actualizar);
+  durationRange.addEventListener("input", actualizar);
+
+  actualizar();
+</script>
 </body>
 </html>
