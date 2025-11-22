@@ -3,17 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Yin Yang Consulting – Calculadora</title>
+  <title>Yin Yang | Consulting – Calculadora</title>
 
   <style>
     :root {
       --rojo: #e53935;
       --rojo-oscuro: #b71c1c;
       --negro: #050505;
-      --gris-fondo: #111111;
-      --crema: #f5f0e6;
-      --verde: #4caf50;
       --oro: #ffe082;
+      --crema: #f5f0e6;
     }
 
     * {
@@ -98,8 +96,18 @@
       font-size: 13px;
     }
 
+    .section-title {
+      margin-top: 18px;
+      margin-bottom: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--crema);
+    }
+
     .sliders {
-      margin-top: 14px;
+      margin-top: 8px;
     }
 
     .row {
@@ -205,7 +213,7 @@
 
     .result-main-box {
       border-radius: 18px;
-      padding: 18px 18px 16px;
+      padding: 20px 18px 18px;
       border: 2px solid var(--oro);
       background: linear-gradient(145deg, #2b0000, #8b0000);
       text-align: center;
@@ -223,196 +231,207 @@
       font-size: 30px;
       font-weight: 800;
       color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .result-sub {
+      font-size: 12px;
+      color: #ffe8c2;
       margin-bottom: 4px;
     }
 
-    .result-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 6px;
-    }
-
-    .stat {
-      border-radius: 12px;
-      padding: 10px 10px 9px;
-      background: rgba(15, 15, 15, 0.98);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .stat-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #aaaaaa;
-      margin-bottom: 4px;
-    }
-
-    .stat-value {
-      font-size: 15px;
-      font-weight: 700;
-      color: #ffffff;
-    }
-
-    .footer-note {
+    .commission-text {
       margin-top: 8px;
-      font-size: 10px;
-      color: #9e9e9e;
-      text-align: left;
+      font-size: 12px;
+      color: #f7f7f7;
+      font-weight: 600;
+    }
+
+    @media (max-width: 860px) {
+      body {
+        padding: 16px;
+      }
+      .layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .row {
+        grid-template-columns: minmax(0, 1.4fr);
+        grid-template-rows: auto auto auto;
+      }
+      .row input[type="range"] {
+        grid-column: 1 / -1;
+      }
+      .value-box {
+        justify-self: flex-end;
+        width: 70px;
+      }
+      .select-row {
+        grid-template-columns: minmax(0, 1.4fr);
+      }
     }
   </style>
 </head>
-
 <body>
   <div class="layout">
-    <!-- IZQUIERDA ------------------------------- -->
+    <!-- IZQUIERDA -->
     <div class="card">
       <div class="card-header">
-        <div class="title-main">YIN YANG CONSULTING</div>
+        <div class="title-main">Yin Yang | Consulting</div>
         <p class="subtitle">
-          Ajustá los deslizables para conseguir el mejor programa ideal para vos.  
-          El precio se calcula siempre en PIF y después se le aplica interés según el plan de pagos.
+          Ajustá los deslizables para conseguir el mejor programa ideal para vos.
         </p>
 
-        <span class="badge">Programa base (SIN 1:1 extra NI chat privado)</span>
+        <span class="badge">✅ ENTREGABLES</span>
         <ul class="checklist">
-          <li><span class="check-icon">✅</span> Llamada inicial de Onboarding personalizado (Tony por defecto)</li>
-          <li><span class="check-icon">✅</span> 8 Consultorías semanales con Cristian / Paul / Consultores</li>
-          <li><span class="check-icon">✅</span> Canal de voz abierto 24/7 para networking</li>
-          <li><span class="check-icon">✅</span> 5 canales de feedback para auditorías y seguimiento personalizado</li>
-          <li><span class="check-icon">✅</span> Roadmap de 3 fases paso a paso</li>
-          <li><span class="check-icon">✅</span> Comunidad privada con casos de éxito y networking</li>
-          <li><span class="check-icon">✅</span> Curso “Yin Yang Consulting” (+50hs)</li>
+          <li><span class="check-icon">✅</span> Llamada inicial de Onboarding personalizado (Tony por defecto).</li>
+          <li><span class="check-icon">✅</span> 8 Consultorías semanales con Cristian / Paul / Consultores.</li>
+          <li><span class="check-icon">✅</span> Canal de voz abierto 24/7 para networking.</li>
+          <li><span class="check-icon">✅</span> 5 canales de feedback para auditorías y seguimiento personalizado.</li>
+          <li><span class="check-icon">✅</span> Roadmap de 3 fases paso a paso.</li>
+          <li><span class="check-icon">✅</span> Comunidad privada con casos de éxito y networking.</li>
+          <li><span class="check-icon">✅</span> Curso “Yin Yang Consulting: de 0 a Líder Social” (+50hs).</li>
         </ul>
       </div>
 
-      <div class="sliders">
+      <div class="section-title">Personalizador de Plan</div>
 
+      <div class="sliders">
+        <!-- LLAMADAS 1:1 -->
         <div class="row">
-          <label for="calls">¿Cuántas llamadas 1:1?</label>
-          <input id="calls" type="range" min="0" max="12" step="1" value="0"/>
+          <label for="calls">
+            ¿Cuántas llamadas 1:1?
+            <small>0 a 12 sesiones individuales adicionales.</small>
+          </label>
+          <input id="calls" type="range" min="0" max="12" step="1" value="0" />
           <div class="value-box" id="callsValue">0</div>
         </div>
 
+        <!-- CHAT PRIVADO -->
         <div class="row">
-          <label for="chatDays">Días de chat privado 1:1</label>
-          <input id="chatDays" type="range" min="0" max="365" step="5" value="0"/>
+          <label for="chatDays">
+            Días de chat privado 1:1
+            <small>Máximo igual a la duración del servicio.</small>
+          </label>
+          <input id="chatDays" type="range" min="0" max="365" step="5" value="0" />
           <div class="value-box" id="chatDaysValue">0</div>
         </div>
 
+        <!-- DURACIÓN -->
         <div class="row">
-          <label for="duration">Duración del servicio</label>
-          <input id="duration" type="range" min="30" max="365" step="5" value="30"/>
+          <label for="duration">
+            Duración del servicio (días)
+            <small>Mínimo 30, máximo 365.</small>
+          </label>
+          <input id="duration" type="range" min="30" max="365" step="5" value="30" />
           <div class="value-box" id="durationValue">30</div>
         </div>
 
+        <!-- ONBOARDING -->
         <div class="select-row">
-          <label>Onboarding (primera llamada)</label>
+          <div>
+            <label>
+              Onboarding (primera llamada)
+              <small>Con Tony por defecto. Con Cristian suma el valor de una llamada 1:1.</small>
+            </label>
+          </div>
           <div class="pill-toggle" id="onboardingToggle">
             <button class="pill-option active" data-value="tony">Con Tony</button>
             <button class="pill-option" data-value="cris">Con Cristian</button>
           </div>
         </div>
 
+        <!-- PLAN DE PAGO -->
         <div class="select-row">
-          <label>Plan de pago</label>
-          <select id="plan">
-            <option value="1">1 pago (PIF, 0%)</option>
-            <option value="2">2 pagos (+13.2%)</option>
-            <option value="3">3 pagos (+33.4%)</option>
-            <option value="4">4 pagos (+45.9%)</option>
-          </select>
+          <div>
+            <label>Plan de pago</label>
+          </div>
+          <div>
+            <select id="plan">
+              <option value="1">1 pago (PIF)</option>
+              <option value="2">2 pagos</option>
+              <option value="3">3 pagos</option>
+              <option value="4">4 pagos</option>
+            </select>
+          </div>
         </div>
-
       </div>
     </div>
 
-    <!-- DERECHA ------------------------------- -->
+    <!-- DERECHA -->
     <div class="card result-card">
-
       <div class="result-main-box">
-        <div class="result-label">INGRESOS TOTALES ESTIMADOS (PLAN ELEGIDO)</div>
-        <div class="result-amount" id="totalPlan">$ 0.00</div>
-        <div class="result-sub" id="totalPlanLabel">Seleccioná opciones</div>
-
-        <div class="result-grid">
-          <div class="stat">
-            <div class="stat-label">PRECIO PIF</div>
-            <div class="stat-value" id="pifAmount">$ 0.00</div>
-          </div>
-
-          <div class="stat">
-            <div class="stat-label">MONTO POR CUOTA</div>
-            <div class="stat-value" id="installmentAmount">$ 0.00</div>
-            <div class="stat-note" id="interestLabel"></div>
-          </div>
-
-          <!-- NUEVO: Comisión 10% -->
-          <div class="stat">
-            <div class="stat-label">COMISIÓN (10%)</div>
-            <div class="stat-value" id="commissionValue">$ 0.00</div>
-            <div class="stat-note">Aplicada sobre el precio final</div>
-          </div>
+        <div class="result-label">TU PERSONALIZACIÓN FINAL ES DE</div>
+        <div class="result-amount" id="mainAmount">$ 0.00</div>
+        <div class="result-sub" id="mainSub">Seleccioná opciones para ver el precio.</div>
+        <div class="commission-text" id="commissionText">
+          Comisión closer (10%): $ 0.00
         </div>
       </div>
-
-      <div class="footer-note">
-        · Precio base por día: 1500 / 120 (12.5 USD)  
-        · Chat privado: proporcional a 247 / 120  
-        · Llamadas 1:1: proporcional a 497 / 4  
-      </div>
-
     </div>
   </div>
 
   <script>
-    /* ---------- Constantes ---------- */
-    const PRICE_PER_DAY_BASE = 1500 / 120;
-    const PRICE_PER_CHAT_DAY = 247 / 120;
-    const PRICE_PER_CALL = 497 / 4;
+    // Constantes de precio
+    const PRICE_PER_DAY_BASE = 1500 / 120;     // 12.5
+    const PRICE_PER_CHAT_DAY = 247 / 120;      // proporcional
+    const PRICE_PER_CALL = 497 / 4;            // 1 call
 
+    // Planes de pago (interés interno, no se muestra)
     const PAYMENT_PLANS = {
       "1": { installments: 1, interest: 0 },
-      "2": { installments: 2, interest: 1698/1500 - 1 },
-      "3": { installments: 3, interest: 2001/1500 - 1 },
-      "4": { installments: 4, interest: 2188/1500 - 1 },
+      "2": { installments: 2, interest: 1698 / 1500 - 1 },
+      "3": { installments: 3, interest: 2001 / 1500 - 1 },
+      "4": { installments: 4, interest: 2188 / 1500 - 1 },
     };
 
-    /* ---------- Inputs ---------- */
+    // Inputs
     const callsInput = document.getElementById("calls");
     const chatDaysInput = document.getElementById("chatDays");
     const durationInput = document.getElementById("duration");
     const planSelect = document.getElementById("plan");
 
-    /* ---------- Output Elements ---------- */
+    // Outputs numéricos sliders
     const callsValue = document.getElementById("callsValue");
     const chatDaysValue = document.getElementById("chatDaysValue");
     const durationValue = document.getElementById("durationValue");
 
-    const pifAmountEl = document.getElementById("pifAmount");
-    const installmentAmountEl = document.getElementById("installmentAmount");
-    const interestLabelEl = document.getElementById("interestLabel");
-    const totalPlanEl = document.getElementById("totalPlan");
-    const totalPlanLabelEl = document.getElementById("totalPlanLabel");
+    // Outputs resultados
+    const mainAmountEl = document.getElementById("mainAmount");
+    const mainSubEl = document.getElementById("mainSub");
+    const commissionTextEl = document.getElementById("commissionText");
 
-    const commissionValueEl = document.getElementById("commissionValue");
-
+    // Onboarding toggle
+    const onboardingToggle = document.getElementById("onboardingToggle");
     let onboardingValue = "tony";
 
     function formatMoney(n) {
-      return "$ " + n.toLocaleString("en-US", { minimumFractionDigits: 2 });
+      return "$ " + n.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
     }
 
     function actualizar() {
-      const calls = Number(callsInput.value);
-      const chatDays = Number(chatDaysInput.value);
-      const duration = Number(durationInput.value);
+      let calls = Number(callsInput.value);
+      let chatDays = Number(chatDaysInput.value);
+      let duration = Number(durationInput.value);
       const plan = PAYMENT_PLANS[planSelect.value];
 
+      // Regla: el chat privado no puede superar la duración del servicio
+      if (chatDays > duration) {
+        chatDays = duration;
+        chatDaysInput.value = chatDays;
+      }
+
+      // Actualizar textos sliders
       callsValue.textContent = calls;
       chatDaysValue.textContent = chatDays;
       durationValue.textContent = duration;
 
+      // Costos base
       const costBase = duration * PRICE_PER_DAY_BASE;
       const costChat = chatDays * PRICE_PER_CHAT_DAY;
       const costCalls = calls * PRICE_PER_CALL;
@@ -422,28 +441,36 @@
       const total = pif * (1 + plan.interest);
       const installment = total / plan.installments;
 
-      // Comisión 10%
       const commission = total * 0.10;
 
-      pifAmountEl.textContent = formatMoney(pif);
-      totalPlanEl.textContent = formatMoney(total);
-      totalPlanLabelEl.textContent = `${plan.installments} cuotas`;
+      // Render principal
+      const isPIF = planSelect.value === "1";
 
-      installmentAmountEl.textContent = formatMoney(installment);
-      interestLabelEl.textContent = `Interés: ${(plan.interest*100).toFixed(1)}%`;
+      if (isPIF) {
+        mainAmountEl.textContent = formatMoney(pif);
+        mainSubEl.textContent = "1 pago único (PIF) · Total: " + formatMoney(pif);
+      } else {
+        mainAmountEl.textContent = formatMoney(installment);
+        mainSubEl.textContent =
+          plan.installments +
+          " pagos de " +
+          formatMoney(installment) +
+          " · Total: " +
+          formatMoney(total);
+      }
 
-      commissionValueEl.textContent = formatMoney(commission);
+      commissionTextEl.textContent =
+        "Comisión closer (10%): " + formatMoney(commission);
     }
 
-    const onboardingToggle = document.getElementById("onboardingToggle");
-    onboardingToggle.addEventListener("click", e => {
+    onboardingToggle.addEventListener("click", (e) => {
       const btn = e.target.closest(".pill-option");
       if (!btn) return;
-      onboardingValue = btn.dataset.value;
+      onboardingValue = btn.getAttribute("data-value");
 
-      onboardingToggle.querySelectorAll(".pill-option")
-        .forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
+      onboardingToggle
+        .querySelectorAll(".pill-option")
+        .forEach((el) => el.classList.toggle("active", el === btn));
 
       actualizar();
     });
