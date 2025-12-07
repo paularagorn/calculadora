@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Yin Yang | Upsells para Clientes PIF</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* ---------- RESET SIMPLE ---------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Helvetica Neue", Arial, sans-serif;
+      background-color: #050607;
+      color: #f4f4f4;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---------- FONDO CON PATRÓN + LOGO DIFUMINADO ---------- */
+    .page {
+      min-height: 100vh;
+      padding: 32px 16px 64px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page::before {
+      /* Collage de fotos tipo RSD: reemplazá bg-social.jpg por tu imagen */
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at top left, rgba(255,255,255,0.06), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(255,0,0,0.06), transparent 55%),
+        url("bg-social.jpg");
+      background-size: cover;
+      background-position: center;
+      filter: grayscale(30%) contrast(1.1) brightness(0.4);
+      opacity: 0.45;
+      z-index: -3;
+    }
+
+    .page::after {
+      /* Logo Yin Yang gigante y muy suave de fondo */
+      content: "";
+      position: fixed;
+      inset: 10% 15%;
+      background-image: url("yin-yang-logo.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      opacity: 0.06;
+      filter: blur(1px);
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    .content {
+      width: 100%;
+      max-width: 1200px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 32px;
+    }
+
+    @media (max-width: 900px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ---------- TARJETA PRINCIPAL (IZQUIERDA) ---------- */
+    .card {
+      background: radial-gradient(circle at top left, #15181f, #050609);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 215, 128, 0.3);
+      box-shadow: 0 26px 60px rgba(0, 0, 0, 0.75);
+      padding: 28px 26px 32px;
+      backdrop-filter: blur(20px);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .logo-circle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 215, 128, 0.7);
+      background: radial-gradient(circle at 30% 20%, #ffd782, #b3792a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.75);
+    }
+    .logo-circle img {
+      width: 70%;
+      height: 70%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 4px rgba(0,0,0,0.8));
+    }
+
+    .headline {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .headline h1 {
+      font-size: clamp(1.4rem, 1.8vw, 1.8rem);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .headline span {
+      font-size: 0.9rem;
+      color: #d3d3d3;
+    }
+
+    .tag-pif {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(9, 184, 118, 0.16);
+      border: 1px solid rgba(9, 184, 118, 0.6);
+      color: #a8ffda;
+      margin-bottom: 16px;
+    }
+    .tag-pif::before {
+      content: "●";
+      font-size: 0.7rem;
+    }
+
+    .intro-text {
+      font-size: 0.95rem;
+      color: #e3e3e3;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+    .intro-text strong {
+      color: #ffffff;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(
+        to right,
+        transparent,
+        rgba(255, 255, 255, 0.28),
+        transparent
+      );
+      margin: 18px 0 20px;
+    }
+
+    .section-title {
+      font-size: 0.88rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #f5cd77;
+      margin-bottom: 8px;
+    }
+
+    .bullets {
+      list-style: none;
+      margin-bottom: 18px;
+      font-size: 0.9rem;
+      color: #f1f1f1;
+    }
+    .bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .bullets li::before {
+      content: "✓";
+      color: #21e686;
+      margin-top: 1px;
+      font-size: 0.9rem;
+    }
+
+    /* ---------- PACKS ---------- */
+    .packs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 10px;
+      margin-bottom: 26px;
+    }
+    @media (max-width: 1000px) {
+      .packs {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .pack-card {
+      background: linear-gradient(145deg, #11131a, #07080d);
+      border-radius: 18px;
+      border: 1px solid rgba(247, 208, 96, 0.35);
+      padding: 16px 14px 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    .pack-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.08), transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .pack-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #ffdd8a;
+      margin-bottom: 4px;
+    }
+    .pack-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #ffffff;
+    }
+    .pack-price {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #ffedba;
+      margin-bottom: 4px;
+    }
+    .pack-price span {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #f7d883;
+    }
+
+    .pack-list {
+      list-style: none;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+      color: #e6e6e6;
+    }
+    .pack-list li {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    .pack-list li::before {
+      content: "•";
+      color: #f5cd77;
+      margin-top: 1px;
+      font-size: 0.85rem;
+    }
+
+    .video-placeholder {
+      border-radius: 11px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: radial-gradient(circle at top left, #252633, #070812);
+      margin-bottom: 8px;
+    }
+    .video-placeholder iframe {
+      width: 100%;
+      height: 140px;
+      border: none;
+      display: block;
+    }
+    .video-caption {
+      font-size: 0.72rem;
+      color: #d8d8d8;
+      margin-top: 3px;
+    }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #040505;
+      background: linear-gradient(135deg, #1fe676, #11b95b);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.8);
+      transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.08s ease;
+    }
+    .btn-whatsapp:hover {
+      filter: brightness(1.06);
+      transform: translateY(-1px);
+      box-shadow: 0 16px 38px rgba(0, 0, 0, 0.9);
+    }
+    .btn-whatsapp span.icon {
+      font-size: 1.05rem;
+    }
+
+    .note-small {
+      font-size: 0.78rem;
+      color: #c7c7c7;
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    /* ---------- EXTRAS INDIVIDUALES ---------- */
+    .extras-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 12px;
+    }
+    @media (max-width: 1000px) {
+      .extras-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .extra-card {
+      background: radial-gradient(circle at top, #151620, #050609);
+      border-radius: 16px;
+      border: 1px solid rgba(140, 140, 140, 0.45);
+      padding: 13px 14px 14px;
+    }
+
+    .extra-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .extra-price {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffedba;
+      margin-bottom: 4px;
+    }
+    .extra-description {
+      font-size: 0.83rem;
+      color: #dbdbdb;
+      margin-bottom: 7px;
+      line-height: 1.45;
+    }
+
+    .extra-card .video-placeholder iframe {
+      height: 115px;
+    }
+
+    /* ---------- COLUMNA DERECHA: INFO + SOCIAL PROOF ---------- */
+    .right-column {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .summary-card {
+      background: radial-gradient(circle at top left, #1a1010, #050404);
+      border-radius: 24px;
+      border: 1px solid rgba(247, 208, 96, 0.45);
+      box-shadow: 0 26px 60px rgba(0, 0, 0, 0.8);
+      padding: 26px 24px 24px;
+    }
+
+    .summary-title {
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #f5cd77;
+      margin-bottom: 10px;
+    }
+    .summary-big {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .summary-sub {
+      font-size: 0.92rem;
+      color: #e3e3e3;
+      margin-bottom: 12px;
+      line-height: 1.55;
+    }
+
+    .summary-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      margin-bottom: 12px;
+      color: #f1f1f1;
+    }
+    .summary-tag::before {
+      content: "★";
+      color: #ffd362;
+      font-size: 0.9rem;
+    }
+
+    .summary-note {
+      font-size: 0.8rem;
+      color: #d2d2d2;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    /* Casos de éxito (dentro de la columna derecha) */
+    .success-card {
+      background: radial-gradient(circle at top left, #171922, #050609);
+      border-radius: 22px;
+      border: 1px solid rgba(200, 200, 200, 0.3);
+      padding: 20px 22px 18px;
+    }
+
+    .success-title {
+      font-size: 0.85rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #f5cd77;
+      margin-bottom: 6px;
+    }
+    .success-subtitle {
+      font-size: 0.9rem;
+      color: #dedede;
+      margin-bottom: 14px;
+    }
+
+    .success-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .success-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .success-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      overflow: hidden;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.75);
+    }
+    .success-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .success-text {
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+    .success-handle {
+      font-weight: 600;
+    }
+    .success-highlight {
+      color: #ff5c5c;
+      font-weight: 600;
+    }
+
+    /* ---------- FOOTNOTE ---------- */
+    .footnote {
+      max-width: 1200px;
+      margin: 20px auto 0;
+      font-size: 0.78rem;
+      color: #bfbfbf;
+      text-align: center;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="content">
+      <!-- COLUMNA IZQUIERDA: PACKS + EXTRAS -->
+      <section class="card">
+        <div class="card-header">
+          <div class="logo-circle">
+            <!-- Reemplazá la ruta si tu logo está en otra carpeta -->
+            <img src="yin-yang-logo.png" alt="Yin Yang Logo" />
+          </div>
+          <div class="headline">
+            <h1>YIN YANG | CONSULTING</h1>
+            <span>Upsells de acompañamiento para clientes que quieren ir más profundo.</span>
+          </div>
+        </div>
+
+        <div class="tag-pif">
+          Página exclusiva para clientes que pagaron PIF (USD 1500)
+        </div>
+
+        <p class="intro-text">
+          Si Tony te compartió esta página es porque vio en tu <strong>reporte mensual</strong>
+          que te puede servir trabajar más cerca con Cristian. Acá tenés
+          <strong>packs cerrados</strong> y también <strong>extras individuales</strong>
+          para sumar a tu acompañamiento actual.
+        </p>
+
+        <div class="divider"></div>
+
+        <h2 class="section-title">Packs recomendados</h2>
+        <p class="intro-text" style="margin-bottom: 10px;">
+          Los packs combinan chat privado y sesiones 1:1 con Cristian con un
+          precio preferencial. Son la forma más potente de acelerar tus resultados.
+        </p>
+
+        <!-- PACKS -->
+        <div class="packs">
+          <!-- Pack 1 -->
+          <article class="pack-card">
+            <div class="pack-label">Pack 1</div>
+            <div class="pack-name">Chat + 2 Sesiones 1:1</div>
+            <div class="pack-price">USD 350 <span>pago único</span></div>
+
+            <ul class="pack-list">
+              <li>Chat privado 1:1 con el equipo por el resto del programa.</li>
+              <li>2 sesiones individuales de 30 minutos con Cristian.</li>
+              <li>Ideal si venís aplicando, pero sentís que te faltan ajustes finos.</li>
+            </ul>
+
+            <div class="video-placeholder">
+              <!-- REEMPLAZÁ este iframe por el enlace real al video de Cristian -->
+              <iframe
+                src="about:blank"
+                title="Video Pack 1 - Chat + 2 Sesiones 1:1"
+              ></iframe>
+            </div>
+            <p class="video-caption">
+              Video: Cristian te cuenta cómo usar este pack para destrabar tus próximos 60 días.
+            </p>
+
+            <a
+              class="btn-whatsapp"
+              target="_blank"
+              href="https://wa.me/5493415697949?text=Hola%20Tony%2C%20soy%20cliente%20PIF%20de%20Yin%20Yang%20y%20quiero%20el%20Pack%201%20%28Chat%20Privado%20%2B%202%20Sesiones%201%3A1%29."
+            >
+              <span class="icon">💬</span>
+              <span>Quiero el Pack 1</span>
+            </a>
+
+            <p class="note-small">
+              Tony te va a responder por WhatsApp para coordinar fechas de las sesiones y
+              activar el chat privado.
+            </p>
+          </article>
+
+          <!-- Pack 2 -->
+          <article class="pack-card">
+            <div class="pack-label">Pack 2</div>
+            <div class="pack-name">Chat + 4 Sesiones 1:1</div>
+            <div class="pack-price">USD 500 <span>pago único</span></div>
+
+            <ul class="pack-list">
+              <li>Chat privado 1:1 por el resto del programa.</li>
+              <li>4 sesiones individuales de 30 minutos con Cristian.</li>
+              <li>Perfecto si querés un seguimiento bien de cerca durante varios meses.</li>
+            </ul>
+
+            <div class="video-placeholder">
+              <iframe
+                src="about:blank"
+                title="Video Pack 2 - Chat + 4 Sesiones 1:1"
+              ></iframe>
+            </div>
+            <p class="video-caption">
+              Video: Cristian explica cómo se arma el plan cuando trabajás 4 sesiones con él.
+            </p>
+
+            <a
+              class="btn-whatsapp"
+              target="_blank"
+              href="https://wa.me/5493415697949?text=Hola%20Tony%2C%20soy%20cliente%20PIF%20de%20Yin%20Yang%20y%20quiero%20el%20Pack%202%20%28Chat%20Privado%20%2B%204%20Sesiones%201%3A1%29."
+            >
+              <span class="icon">💬</span>
+              <span>Quiero el Pack 2</span>
+            </a>
+
+            <p class="note-small">
+              Recomendado para clientes que ya vienen tomando acción, pero quieren
+              llegar a un nuevo estándar en 3-4 meses.
+            </p>
+          </article>
+
+          <!-- Pack 3 -->
+          <article class="pack-card">
+            <div class="pack-label">Pack 3</div>
+            <div class="pack-name">
+              Chat + 2 Sesiones 1:1 + Presencial
+            </div>
+            <div class="pack-price">USD 650 <span>pago único</span></div>
+
+            <ul class="pack-list">
+              <li>Chat privado 1:1 por el resto del programa.</li>
+              <li>2 sesiones individuales de 30 minutos con Cristian.</li>
+              <li>1 encuentro presencial intensivo en Rosario junto a Cristian (una tarde). </li>
+              <li>Para clientes que quieren romper la inercia de acción en un solo fin de semana.</li>
+            </ul>
+
+            <div class="video-placeholder">
+              <iframe
+                src="about:blank"
+                title="Video Pack 3 - Chat + 2 Sesiones + Presencial"
+              ></iframe>
+            </div>
+            <p class="video-caption">
+              Video: Cristian te muestra cómo suele ser una tarde presencial y qué podés
+              esperar de ese día.
+            </p>
+
+            <a
+              class="btn-whatsapp"
+              target="_blank"
+              href="https://wa.me/5493415697949?text=Hola%20Tony%2C%20soy%20cliente%20PIF%20de%20Yin%20Yang%20y%20quiero%20el%20Pack%203%20%28Chat%20Privado%20%2B%202%20Sesiones%201%3A1%20%2B%20Encuentro%20Presencial%29."
+            >
+              <span class="icon">💬</span>
+              <span>Quiero el Pack 3</span>
+            </a>
+
+            <p class="note-small">
+              Ideal si ya entendés la teoría, pero sentís que te falta una experiencia
+              fuerte en vivo para destrabar.
+            </p>
+          </article>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- EXTRAS INDIVIDUALES -->
+        <h2 class="section-title">Extras individuales</h2>
+        <p class="intro-text" style="margin-bottom: 8px;">
+          Si preferís ir de a poco, también podés sumar cada opción por separado.
+          Mejor invertir en <strong>un extra</strong> que quedarte sin el apoyo que necesitás.
+        </p>
+
+        <div class="extras-grid">
+          <!-- Extra: Chat Privado -->
+          <article class="extra-card">
+            <div class="extra-title">Chat privado 1:1 (resto del programa)</div>
+            <div class="extra-price">USD 200</div>
+            <p class="extra-description">
+              Canal directo para escribirnos tus dudas en el día a día, compartir
+              experiencias y recibir corrección rápida sin esperar a la próxima clase.
+            </p>
+
+            <div class="video-placeholder">
+              <iframe
+                src="about:blank"
+                title="Video Chat Privado"
+              ></iframe>
+            </div>
+            <p class="video-caption">
+              Video: Cristian te cuenta cuándo tiene sentido sumar chat privado y qué
+              puedes esperar del ritmo de respuesta.
+            </p>
+
+            <a
+              class="btn-whatsapp"
+              target="_blank"
+              href="https://wa.me/5493415697949?text=Hola%20Tony%2C%20soy%20cliente%20PIF%20de%20Yin%20Yang%20y%20quiero%20sumar%20solo%20Chat%20Privado."
+            >
+              <span class="icon">💬</span>
+              <span>Quiero sólo Chat</span>
+            </a>
+          </article>
+
+          <!-- Extra: Sesión 1:1 -->
+          <article class="extra-card">
+            <div class="extra-title">Sesión 1:1 con Cristian (30 minutos)</div>
+            <div class="extra-price">USD 100</div>
+            <p class="extra-description">
+              Espacio individual para que Cristian revise tu caso, identifique el
+              verdadero bloqueo y te deje con un plan concreto para las próximas semanas.
+            </p>
+
+            <div class="video-placeholder">
+              <iframe
+                src="about:blank"
+                title="Video Sesión 1:1"
+              ></iframe>
+            </div>
+            <p class="video-caption">
+              Video: Cristian explica cómo aprovechar al máximo una sola sesión 1:1.
+            </p>
+
+            <a
+              class="btn-whatsapp"
+              target="_blank"
+              href="https://wa.me/5493415697949?text=Hola%20Tony%2C%20soy%20cliente%20PIF%20de%20Yin%20Yang%20y%20quiero%20sumar%20una%20Sesi%C3%B3n%201%3A1%20con%20Cristian."
+            >
+              <span class="icon">💬</span>
+              <span>Quiero una Sesión 1:1</span>
+            </a>
+          </article>
+
+          <!-- Extra: Encuentro Presencial -->
+          <article class="extra-card">
+            <div class="extra-title">Encuentro presencial con Cristian</div>
+            <div class="extra-price">USD 280</div>
+            <p class="extra-description">
+              Nos vemos en Rosario para una tarde de acción guiada. Es para clientes
+              que saben qué hacer, pero les cuesta salir solos y quieren romper la
+              ansiedad social en un solo día.
+            </p>
+
+            <div class="video-placeholder">
+              <iframe
+                src="about:blank"
+                title="Video Encuentro Presencial"
+              ></iframe>
+            </div>
+            <p class="video-caption">
+              Video: Cristian te muestra qué suele pasar en un encuentro presencial y
+              cómo seguir después para mantener el momentum.
+            </p>
+
+            <a
+              class="btn-whatsapp"
+              target="_blank"
+              href="https://wa.me/5493415697949?text=Hola%20Tony%2C%20soy%20cliente%20PIF%20de%20Yin%20Yang%20y%20quiero%20sumar%20un%20Encuentro%20Presencial%20con%20Cristian."
+            >
+              <span class="icon">💬</span>
+              <span>Quiero el Presencial</span>
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <!-- COLUMNA DERECHA: CONTEXTO + CASOS DE ÉXITO -->
+      <section class="right-column">
+        <article class="summary-card">
+          <div class="summary-title">Cómo funciona esta página</div>
+          <div class="summary-big">Upsells por invitación</div>
+          <div class="summary-tag">
+            Tony ya revisó tu caso y por eso estás viendo esto
+          </div>
+          <p class="summary-sub">
+            Esta página no es un “menú público” del programa. Es una herramienta que
+            usamos internamente para clientes PIF que ya están dentro de Yin Yang y
+            que, por su momento actual, pueden aprovechar trabajar más cerca con
+            Cristian.
+          </p>
+
+          <p class="summary-note">
+            Todas las opciones dependen de la <strong>agenda real de Cristian</strong>.
+            Cuando le escribas a Tony, él te va a confirmar fechas y si tu situación
+            encaja mejor con un pack, un extra suelto, o si primero conviene que
+            ajustes una parte de tu juego en las clases grupales.
+          </p>
+        </article>
+
+        <!-- Casos de éxito dentro de la columna derecha, justo debajo del contexto -->
+        <article class="success-card">
+          <h2 class="success-title">Casos de éxito que entraron al círculo privado</h2>
+          <p class="success-subtitle">
+            Algunos clientes que aprovecharon este tipo de acompañamiento y hoy juegan en otra liga:
+          </p>
+
+          <ul class="success-list">
+            <li class="success-item">
+              <div class="success-avatar">
+                <img src="avatar-guillermo.jpg" alt="Guillermo" />
+              </div>
+              <div class="success-text">
+                <div class="success-handle">@Guillermo.olondriz</div>
+                <span class="success-highlight">
+                  +6 años en pareja
+                </span>
+                con una mujer tradicional que conoció durante el día.
+              </div>
+            </li>
+
+            <li class="success-item">
+              <div class="success-avatar">
+                <img src="avatar-marcelo.jpg" alt="Marcelo" />
+              </div>
+              <div class="success-text">
+                <div class="success-handle">@Marcelo.jimenezarg</div>
+                Dueño de negocio
+                <span class="success-highlight">exitoso</span>
+                teniendo 2 citas por día, experto en conocer personas durante el día.
+              </div>
+            </li>
+
+            <li class="success-item">
+              <div class="success-avatar">
+                <img src="avatar-alex.jpg" alt="Alex" />
+              </div>
+              <div class="success-text">
+                <div class="success-handle">@Alexmcarrera</div>
+                Viajando por el mundo
+                <span class="success-highlight">
+                  conociendo a las que quiere
+                </span>
+                mientras escala su negocio a las 7 cifras.
+              </div>
+            </li>
+
+            <li class="success-item">
+              <div class="success-avatar">
+                <img src="avatar-paul.jpg" alt="Paul" />
+              </div>
+              <div class="success-text">
+                <div class="success-handle">@Paul.aragorn</div>
+                Mi mejor caso de éxito: lo llevé de CERO a ser el mejor de Argentina,
+                <span class="success-highlight">
+                  gran comunicador y empresario.
+                </span>
+              </div>
+            </li>
+
+            <li class="success-item">
+              <div class="success-avatar">
+                <img src="avatar-julian.jpg" alt="Julián" />
+              </div>
+              <div class="success-text">
+                <div class="success-handle">@ojulianvalnav</div>
+                Político de importante agrupación
+                <span class="success-highlight">
+                  mejoró 10X
+                </span>
+                su comunicación en público.
+              </div>
+            </li>
+          </ul>
+        </article>
+      </section>
+    </div>
+
+    <p class="footnote">
+      *Esta página es sólo para clientes activos que pagaron PIF en esta edición de Yin Yang Consulting.
+      Si estás viendo esto y todavía no hablaste con Tony, escribile primero para que te recomiende qué
+      opción tiene más sentido según tu contexto actual.
+    </p>
+  </div>
+</body>
+</html>
